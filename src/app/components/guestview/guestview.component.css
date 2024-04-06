@@ -1,0 +1,90 @@
+
+  /* CSS cho container chính */
+  #map-container {
+    max-width: 800px; /* Đặt chiều rộng tối đa cho container */
+    margin: 0 auto; /* Căn giữa container */
+    padding: 20px; /* Khoảng cách lề bên trong */
+    border: 1px solid #ccc; /* Đường viền */
+    border-radius: 5px; /* Đường viền cong */
+  }
+
+  /* CSS cho phần bản đồ */
+  #map {
+    /* height: 900px; */
+    height: 100vh;
+    margin-bottom: 20px; /* Khoảng cách phía dưới phần bản đồ */
+  }
+
+  /* CSS cho phần hiển thị dữ liệu */
+  #data-container {
+    background-color: #f9f9f9; /* Màu nền */
+    padding: 10px; /* Khoảng cách lề bên trong */
+    border-radius: 5px; /* Đường viền cong */
+  }
+
+  /* CSS cho tiêu đề */
+  #data-container h2 {
+    font-size: 18px;
+    margin-bottom: 10px; /* Khoảng cách phía dưới tiêu đề */
+  }
+
+  /* CSS cho danh sách */
+  #data-container ul {
+    list-style-type: none; /* Loại bỏ dấu đầu dòng */
+    padding: 0;
+  }
+
+  /* CSS cho mỗi mục trong danh sách */
+  #data-container li {
+    margin-bottom: 5px; /* Khoảng cách giữa các mục */
+  }
+
+/* Đảm bảo rằng phần biểu đồ chiếm toàn bộ chiều rộng của container */
+#lineChart {
+  width: 100%;
+}
+
+/* Đảm bảo rằng phần biểu đồ chiếm chiều cao cố định */
+#lineChart {
+  height: 400px; /* Điều chỉnh chiều cao theo nhu cầu của bạn */
+}
+
+/* Tuỳ chỉnh các đường biểu đồ và vùng nền */
+.chartjs-render-monitor {
+  background-color: #fff; /* Màu nền của biểu đồ */
+  border-radius: 8px; /* Bo góc */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng bên */
+}
+
+/* Tuỳ chỉnh tiêu đề của biểu đồ */
+.chartjs-render-monitor .chartjs-title {
+  font-size: 18px; /* Kích thước font chữ */
+  font-weight: bold; /* Đậm */
+  color: #333; /* Màu chữ */
+}
+
+/* Tuỳ chỉnh các nhãn trên trục x và trục y */
+.chartjs-render-monitor .chartjs-axis-title {
+  font-size: 14px; /* Kích thước font chữ */
+  font-weight: bold; /* Đậm */
+  color: #555; /* Màu chữ */
+}
+
+/* Tuỳ chỉnh các dấu chấm trên trục x và trục y */
+.chartjs-render-monitor .chartjs-tick {
+  color: #777; /* Màu của dấu chấm */
+}
+
+/* Tuỳ chỉnh các dòng lưới trên biểu đồ */
+.chartjs-render-monitor .chartjs-grid-line {
+  border-color: #eee; /* Màu dòng lưới */
+}
+
+p {
+  font-size: 20px;
+  color: #007bff;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,96 @@
+@@@ Liên quan bản đồ Leaflet
+  1. Copy thư mục leaflet vào thư mục src/assets
+  2. Cấu hình trong file angular.json:
+     "styles": [ "src/assets/leaflet/leaflet.css"],
+      "scripts": [ "src/assets/leaflet/leaflet.js"]
+  3. Cấu hình trong tsconfig.json:
+    "compilerOptions": { "allowJs": true, // cho phép biên dịch file js }
+  4. Cấu hình file ts để kết nối thư viện leaflet:
+    import * as L from '../../../assets/leaflet/leaflet-src';
+    ==> bình thường khi cài theo npm thì khai báo thư viện leaflet.js
+    ==> nhưng khi cài thủ công thì lấy file leaflet-src.js
+
+
+
+
+
+    npm install leaflet @types/leaflet
+Thêm Leaflet CSS vào file styles.scss hoặc styles.css:
+    @import "~leaflet/dist/leaflet.css";
+Trong file map.component.html, bạn có thể tạo một div để chứa bản đồ:
+    <div id="map" style="height: 400px;"></div>
+Trong component map.component.ts, bạn cần import Leaflet:
+    import { Component, AfterViewInit } from '@angular/core';
+    import * as L from 'leaflet';
+
+@Component({
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
+})
+export class MapComponent implements AfterViewInit {
+
+  constructor() { }
+
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
+
+  private initMap(): void {
+    const map = L.map('map', {
+      center: [51.505, -0.09],
+      zoom: 13
+    });
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+    });
+
+    tiles.addTo(map);
+  }
+}
+
+
+@@@ Cấu hình leaflet : 
+  "styles": [
+              "@angular/material/prebuilt-themes/purple-green.css",
+              "src/styles.css",
+              {
+                "input": "src/assets/leaflet/leaflet.css",
+                "bundleName": "leaflet",
+                "lazy": true,
+                "inject": false
+              }
+            ],
+            "scripts": [
+              {
+                "input": "src/assets/leaflet/leaflet.js",
+                "bundleName": "leaflet"
+              }
+            ]
+
+
+@@@ Lệnh xóa thư mục
+    Remove-Item -Recurse -Force node_modules
+@@@ 
+    npm audit fix
+
+@@@ thêm thư viện
+    ng add @angular/material
+
+@@@ Tạo component thêm cho dự án trong thư mục components
+    ng g c components/add-data 
+
+@Component({
+  selector: 'app-add-data',
+  standalone: true,
+  imports: [],
+  templateUrl: './add-data.component.html',
+  styleUrl: './add-data.component.css'
+})
+export class AddDataComponent {}
+ ==> Sau khi tạo xong phải xóa phần standalone: true, và imports: [], : để đưa vào router-outlet của app.component.html
+
+@@@ các thư viện cài bổ sung
+  npm install file-saver --save   : lưu file csv

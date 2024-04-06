@@ -1,0 +1,40 @@
+<!-- register.component.html -->
+<div>
+  <h2>Register</h2>
+  <form (submit)="register()">
+    <label for="username">Username:</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      required
+      [(ngModel)]="username"
+    />
+
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      [(ngModel)]="password"
+    />
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      required
+      [(ngModel)]="confirmPassword"
+    />
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p *ngIf="registrationError" style="color: red">
+    Registration failed. Please try again.
+  </p>
+
+  <p>Already have an account? <a (click)="goToLogin()">Login</a></p>
+</div>

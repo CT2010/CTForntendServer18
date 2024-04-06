@@ -1,0 +1,63 @@
+<!-- add-data.component.html -->
+<div class="forms-container">
+<div class="container">
+  <p>Thêm Dữ Liệu Trực Tiếp Theo Từng Ngày</p>
+  <form #formData="ngForm" (submit)="addData(formData)">
+    <div class="form-group" *ngFor="let field of formDataFields">
+      <label [for]="field.id">{{ field.label }}</label>
+      <input
+        type="text"
+        [id]="field.id"
+        [name]="field.name"
+        [(ngModel)]="field.value"
+        required
+      />
+    </div>
+    <button type="submit" class="btn-submit">Thêm Dữ Liệu</button>
+  </form>
+</div>
+<hr>
+<div class="container">
+  <p>Cập Nhật Lại Dữ Liệu Đã Có Theo Địa Điểm Lựa Chọn</p>
+  <form #formData1="ngForm" (submit)="updateData(formData1)">
+    <div class="form-group" *ngFor="let field of formDataFields1">
+      <label [for]="field.id">{{ field.label }}</label>
+      <input
+        type="text"
+        [id]="field.id"
+        [name]="field.name"
+        [(ngModel)]="field.value"
+        required
+      />
+    </div>
+    <button type="submit" class="btn-submit">Cập nhật dữ liệu theo yêu cầu</button>
+  </form>
+</div>
+</div>
+<hr>
+<!-- PHẦN LẤY DỮ LIỆU VỀ THEO TỪNG LỰA CHỌN -->
+<div class="forms-container">
+  <div class="container">
+    <p>Lấy Dữ Liệu Theo Từng Địa Điểm Lựa Chọn</p>
+    <form #formData3="ngForm" (submit)="getOneData(formData3)">
+      <div class="form-group" *ngFor="let field of formDataFields3">
+        <label [for]="field.id">{{ field.label }}</label>
+        <input
+          type="text"
+          [id]="field.id"
+          [name]="field.name"
+          [(ngModel)]="field.value"
+          required
+        />
+      </div>
+      <button type="submit" class="btn-submit">Lấy dữ liệu theo địa điểm nhập vào</button>
+    </form>
+  </div>
+  <hr>
+  <div class="container">
+    <p>Lấy Tất Cả Dữ Liệu Có Trong Cơ Sở Dữ Liệu</p>
+    <form #formData4="ngForm" (submit)="getAllData(formData4)">
+      <button type="submit" class="btn-submit">Lấy Tất Cả Dữ Liệu</button>
+    </form>
+  </div>
+  </div>

@@ -1,0 +1,135 @@
+/* add-data.component.css */
+.forms-container {
+  display: flex;
+  justify-content: space-between; /* Cách đều hai form */
+}
+
+.container {
+  flex: 1; /* Mỗi container chiếm không gian bằng nhau */
+  margin: 0 10px; /* Thêm khoảng cách giữa các form nếu cần */
+}
+/* Container styles */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+  }
+  
+  /* Form styles */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  /* Button styles */
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Added data display styles */
+  .added-data {
+    margin-top: 20px;
+  }
+  
+  .added-data h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .added-data p {
+    margin-bottom: 10px;
+  }
+  
+  .added-data ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .added-data li {
+    margin-bottom: 8px;
+  }
+  
+  /* add-data.component.css */
+
+.show-data {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.show-data h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.show-data p {
+  margin-bottom: 5px;
+}
+
+.show-data ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.show-data li {
+  margin-bottom: 5px;
+}
+
+.show-data strong {
+  margin-right: 5px;
+}
+
+/* add-data.component.css */
+.form-container {
+  display: inline-block;
+  margin-right: 20px; /* Điều chỉnh khoảng cách giữa các biểu mẫu */
+}
+
+
+/* sử dụng cho kiểm tra thời gian nhập */
+.calendar {
+  position: relative;
+  display: inline-block;
+}
+
+.calendar input[type="date"] {
+  position: absolute;
+  opacity: 0;
+}
+.container p {
+  font-size: 18px; /* Cỡ chữ */
+  color: #333; /* Màu chữ */
+  margin-bottom: 20px; /* Khoảng cách phía dưới */
+  font-weight: bold; /* Độ đậm */
+  text-align: center;
+}

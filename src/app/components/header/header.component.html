@@ -1,0 +1,34 @@
+<!-- app-header.component.html -->
+<header>
+  <div class="logo">
+    <img src="../../../assets/logo - Copy.ico" alt="Logo" style="display: block; margin: auto;text-align: center;"/> 
+    <!-- Đặt đường dẫn thực tế của logo của bạn -->
+  </div>
+  <div class="title" style="align-items: center;text-align: center;">
+    <h1>ĐỀ TÀI LUẬN VĂN</h1>
+    <h1>HỆ THỐNG QUAN TRẮC MÔI TRƯỜNG KHÔNG KHÍ TRONG TRƯỜNG HỌC</h1>
+  </div>
+  <nav>
+    <ul>
+      <li *ngIf="!isLogin">
+        <a routerLink="/" (click)="navigateToHome()">Home</a>
+      </li>
+      <!-- <li *ngIf="!isLogin"><a routerLink="/login" >Login</a></li> -->
+      <li *ngIf="!isLogin">
+        <a routerLink="/login" (click)="navigateToLogin()">Login</a>
+      </li>
+      <li *ngIf="!isLogin">
+        <a routerLink="/about" (click)="navigateToAbout()">About</a>
+      </li>
+      <li *ngIf="isLogin">
+        <a>Welcome, {{ loggedInUser }}!</a>
+      </li>
+      <li *ngIf="isLogin">
+        <a routerLink="/logout" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <!-- <div *ngIf="isLogin" class="title">
+    <p>Welcome, {{loggedInUser }}!</p>
+  </div> -->
+</header>

@@ -1,0 +1,30 @@
+<!-- add-new.component.html -->
+<!-- <p>add-new works!</p> -->
+
+
+<div>
+  <form #myForm="ngForm" (submit)="addnewLocation(myForm)">
+    <label for="name">Tên vị trí:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="name" required>
+  
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" name="latitude" [(ngModel)]="latitude" required>
+  
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" name="longitude" [(ngModel)]="longitude" required>
+  
+    <button type="submit">Submit</button>
+    
+  </form>
+
+  <button class="delete" (click)="deleteLocation(myForm)">Xóa</button>  
+
+</div>
+
+
+<!-- Nhập địa điểm theo danh sách - đã xử lý ok  -->
+<!-- 
+<input type="file" (change)="onFileSelected($event)">
+<div>
+  <pre id="csv-content"></pre>
+</div> -->

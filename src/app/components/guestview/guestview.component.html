@@ -1,0 +1,53 @@
+
+
+  <div id="map" style="height: 450px;"></div>
+  <!-- <p>guestview works!</p> -->
+
+  <!-- bổ sung phần ngăn cách giữa hai bảng div -->
+  <hr>
+  <div>
+    <p> BIỂU ĐỒ DỮ LIỆU TẠI ĐỊA ĐIỂM ĐƯỢC CHỌN </p>
+  </div>
+  
+
+  <!-- Display processedData in handleMarkerClick -->
+  <!-- <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Sensor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of OnClickData">
+        <td>{{ item.timestamp }}</td>
+        <td>{{ item.sensor | json }}</td>
+      </tr>
+    </tbody>
+  </table> -->
+
+   <!-- bổ sung phần ngăn cách giữa hai bảng div -->
+   <hr>
+  <!-- FILEPATH: /D:/09.LVS/FontendServer/ang18/src/app/components/guestview/guestview.component.html -->
+  <!--
+    This is a selection element that allows the user to choose a year.
+    The selected year is bound to the 'selectedYear' property.
+    When the user changes the selected year, the 'onYearChange' method is called.
+  -->
+<!-- tạm thời không sử dụng
+  <div>
+    <select (change)="onYearChange($event)">
+      <option *ngFor="let year of years" [value]="year" [selected]="year === selectedYear">{{ year }}</option>
+    </select>
+  </div> -->
+
+  <!-- FILEPATH: /D:/09.LVS/FontendServer/ang18/src/app/components/guestview/guestview.component.html -->
+
+  <!-- This section displays a line chart. -->
+  <div id="chart-container" class="chart-container"></div>
+
+  <!-- This section contains navigation buttons. -->
+  <div class="navigation-buttons" *ngIf="lineChartVisible">
+    <button (click)="navigate('prev')">Trước</button>
+    <button (click)="navigate('next')">Sau</button>
+  </div>

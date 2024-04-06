@@ -1,0 +1,74 @@
+/* app-header.component.css */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffd700; /* Màu khi di chuột vào */
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 1.0rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    margin-top: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav li {
+    margin-right: 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+}
+

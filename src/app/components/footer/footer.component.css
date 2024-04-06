@@ -1,0 +1,70 @@
+.footer {
+  background-color: #3e5163; /* Màu nền đậm */
+  color: #ffffff; /* Màu chữ */
+  font-size: 14px; /* Kích thước chữ */
+  padding: 20px 0;
+  line-height: 1.5;
+}
+
+.footer .container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  max-height: fit-content;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer td {
+  padding: 15px;
+}
+
+.footer a {
+  color: #fff; /* Màu chữ cho liên kết */
+  text-decoration: none; /* Gỡ bỏ gạch chân */
+  transition: color 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.footer a:hover {
+  color: #f1c40f; /* Màu chữ khi hover */
+}
+
+.footer img {
+  width: 24px;
+  height: auto;
+  margin: 5px;
+  transition: transform 0.3s ease; /* Hiệu ứng zoom khi hover */
+}
+
+.footer img:hover {
+  transform: scale(1.1); /* Phóng to icon khi hover */
+}
+
+.footer .contact-info p, .footer .quick-links p, .footer .social-media p {
+  margin: 0 0 10px; /* Khoảng cách giữa các đoạn văn */
+}
+
+.footer .social-media {
+  text-align: center; /* Căn giữa icon mạng xã hội */
+}
+
+.footer .copyright {
+  text-align: center; /* Căn giữa bản quyền */
+  margin-top: 20px; /* Khoảng cách từ bản quyền đến nội dung trên */
+  font-size: 12px; /* Kích thước chữ nhỏ hơn */
+}
+
+/* Điều chỉnh cho màn hình nhỏ */
+@media (max-width: 768px) {
+  .footer .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
