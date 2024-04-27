@@ -4,18 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
-// interface LoginResponse {
-//   message: string;
-//   user: {
-//     password: string;
-//     role: string;
-//     username: string;
-//     __v: number;
-//     _id: string;
-//     // ... các trường khác nếu có
-//   };
-// ... các trường khác nếu có
-// }
+import { environment } from '../../environments/environment';
 
 // Interface MarkerData cho method lấy data location
 interface MarkerData {
@@ -37,12 +26,14 @@ export class AuthService {
   userChange: Subject<string | null> = new Subject<string | null>();
 
   // Đây là api dùng cho đăng ký, gửi nhận dữ liệu
-  private visapiUrl = 'http://localhost:3000/vis'; // Điều chỉnh đường dẫn API theo ứng dụng của bạn
+  private visapiUrl = `${environment.apiUrl}/vis`; // Cập nhật đường dẫn API
+  // private visapiUrl = 'http://localhost:3000/vis'; // Điều chỉnh đường dẫn API theo ứng dụng của bạn
   // api liên quan dữ liệu vị trí và số liệu hiển thị trên bản đồ
   // method cần : thêm vị trí mới, xóa vị trí, tạo dữ liệu tự động theo vị trí
   // method đã khai báo: registerLocation, deleteLocation
 
-  private apiUrl = 'http://localhost:3000/acc'; // Điều chỉnh đường dẫn API theo ứng dụng của bạn
+  private apiUrl = `${environment.apiUrl}/acc`; 
+  // private apiUrl = 'http://localhost:3000/acc'; // Điều chỉnh đường dẫn API theo ứng dụng của bạn
   // đây là api để check liên quan tài khoản người dùng - user
   // có các method đã khai báo: login, logout, registerUser, getLoggedInUser, checklogin
   // loginStatusChanged: any;
