@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     // location.origin;
     // this.router.navigate(['/guest']);
 
-    location.assign('http://localhost:4200/guest'); // xử lý được trường hợp không quay về các trang và xóa lệnh header
+    // location.assign('http://localhost:4200/guest'); // xử lý được trường hợp không quay về các trang và xóa lệnh header
   }
 
   //Phần vieww bên trong

@@ -221,6 +221,7 @@ export class AuthService {
         this.loginStatusChanged.emit(this.isLogin);
         this.token = '';
         localStorage.removeItem('token');
+        window.location.href = `${this.apiUrl}/guest`; // chuyển về trang guest
       }),
       catchError((error) => {
         console.error('Logout error:', error);
