@@ -88,3 +88,21 @@ p {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.error-message {
+  color: red;
+  background-color: #ffe6e6;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.info-message {
+  color: green;
+  background-color: #e6ffe6;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

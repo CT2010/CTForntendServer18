@@ -1,8 +1,8 @@
 // auth.service.ts
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -127,17 +127,54 @@ export class AuthService {
       );
   }
   // Phương thức để lấy dữ liệu name, lat, long trong toàn dữ liệu
-  getAllLoc(): Observable<any> {
-    return this.http.get<any[]>(`${this.visapiUrl}/getAllLocation`).pipe(
-      tap((response) => {
-        console.log('Data received for location:', response);
-      }),
-      catchError((error) => {
-        console.error('Error fetching data for location:', error);
-        throw error;
-      })
-    );
-  }
+ // getAllLoc(): Observable<any> {
+   // return this.http.get<any[]>(`${this.visapiUrl}/getAllLocation`).pipe(
+     // tap((response) => {
+       // console.log('Data received for location:', response);
+       // this.markerData = response.map((location: any) => ({
+        //  name: location.name,
+       //   lat: location.lat,
+       //   lng: location.lng,
+      //  }));
+     // }),
+    //  catchError((error) => {
+    //    console.error('Error fetching data for location:', error);
+    //    throw error;
+   //   })
+   // );
+ // }
+
+//ver 0.2
+getAllLoc(): Observable<MarkerData[]> {
+  return this.http.get<any[]>(`${this.visapiUrl}/getAllLocation`).pipe(
+    map((response: any[]) => {
+      // Chuyển đổi dữ liệu nhận được từ API thành định dạng MarkerData[]
+      console.log('Data rec for location:', response);
+      const fixedData = response.map((location:any) => ({
+        name: location.name, // Xử lý trường hợp thiếu tên
+        lat: parseFloat(location.latitude),          // Xử lý trường hợp thiếu vĩ độ
+        lng: parseFloat(location.longitude),          // Xử lý trường hợp thiếu kinh độ
+      }));
+      console.log('Fixed Data for location:', fixedData);
+      return fixedData; // Trả về dữ liệu đã được chuyển đổi
+    }),
+    catchError((error) => {
+      console.error('Error fetching data for location:', error);
+
+      // Tùy chọn: Trả về một giá trị mặc định trong trường hợp lỗi
+      const fallbackData: MarkerData[] = [
+        { name: 'Default Location', lat: 0, lng: 0 },
+      ];
+      return of(fallbackData);
+
+      // Hoặc ném lỗi ra ngoài nếu không muốn tiếp tục xử lý
+      // throw error;
+    })
+  );
+}
+
+
+
   // Phương thức để lấy toàn bộ dữ liệu
   getAllData(): Observable<any> {
     return this.http.get<any[]>(`${this.visapiUrl}/getAllData`).pipe(

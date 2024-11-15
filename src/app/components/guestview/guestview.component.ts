@@ -36,7 +36,12 @@ export class GuestviewComponent implements AfterViewInit {
   currentPage: number = 0; // Trang hiện tại, bắt đầu từ 0
   itemsPerPage: number = 18; // Số lượng điểm dữ liệu trên mỗi trang
   totalPages: number = 0; // Tổng số trang, sẽ được tính toán
-lineChartVisible: any = false;
+  lineChartVisible: any = false;
+  message: string = ''; // Thuộc tính lưu thông báo
+  messageType: 'error' | 'info' = 'info'; // Loại thông báo: lỗi hoặc thông tin
+
+  map: any;
+  markers: any[] = []; // Lưu các marker hiện tại
 
   // Nút chỉnh slide dữ liệu biểu đồ hiển thị
   navigate(direction: string) {
@@ -69,29 +74,20 @@ lineChartVisible: any = false;
     // Thêm các địa điểm khác ở đây...
   ];
 
+  markerData2: MarkerData[] = [];
+  //  map = L.map('map').setView([10.8231, 106.6297], 13); // vị trí thành phố hồ chí minh
+
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngAfterViewInit(): void {
-    this.authService.getAllLoc().subscribe({
-      next: (response) => {
-        console.log(this.LocationData);
-        this.LocationData = response;
-      },
-      error: (error) => {
-        console.error('Error adding data:', error);
-        const errorMessage = error.error.message;
-        alert('Dữ liệu trả về từ Node: ' + JSON.stringify(errorMessage));
-      },
-    });
-
     if (window.hasOwnProperty('L')) {
       // Kiểm tra xem biến L đã tồn tại chưa
-
-      const map = L.map('map').setView([10.8231, 106.6297], 13); // vị trí thành phố hồ chí minh
-
+      // Tạo bản đồ
+      this.map = L.map('map').setView([10.8231, 106.6297], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors',
-      }).addTo(map);
+      }).addTo(this.map);
+
       // Tạo biểu tượng vị trí
       const locationIcon = L.icon({
         iconUrl: '../../../assets/leaflet/images/marker-icon.png', // Đường dẫn đến biểu tượng vị trí
@@ -99,21 +95,47 @@ lineChartVisible: any = false;
         iconAnchor: [12, 41], // Vị trí neo của biểu tượng, theo tọa độ (x, y)
         popupAnchor: [1, -34], // Vị trí neo của Popup, theo tọa độ (x, y)
       });
-      this.markerData.forEach((data) => {
-        const marker = L.marker([data.lat, data.lng], { icon: locationIcon })
-          .addTo(map)
-          .bindPopup(
-            `<b>${data.name}</b><br>Latitude: ${data.lat}<br>Longitude: ${data.lng}`
-          );
-
-        // bổ sung xử lý sự kiện click vào biểu tượng với hàm handleMarkerClick
-        marker.on('click', () => {
-          this.handleMarkerClick(data);
+     // Lấy dữ liệu từ API và cập nhật markerData
+    this.authService.getAllLoc().subscribe({
+      next: (response) => {
+        this.markerData2 = response;
+        this.markerData2.forEach((newData) => {
+          if (!this.markerData.some((data) => data.name === newData.name)) {
+            this.markerData.push(newData);
+          }
         });
+        console.log("Dữ liệu sau khi cập nhật - markerData:", this.markerData);
+        this.updateMapMarkers(locationIcon); // Cập nhật marker trên bản đồ
+      },
+      error: (error) => {
+        console.error('Error adding data:', error);
+        const errorMessage = error.error.message;
+        alert('Dữ liệu trả về từ Node: ' + JSON.stringify(errorMessage));
+      },
+    });
+  }}
+
+  // Hàm cập nhật marker trên bản đồ
+  private updateMapMarkers(locationIcon: any): void {
+    // Xóa các marker cũ
+    this.markers.forEach((marker) => this.map.removeLayer(marker));
+    this.markers = [];
+
+    // Thêm các marker mới từ markerData đã cập nhật
+    this.markerData.forEach((data) => {
+      const marker = L.marker([data.lat, data.lng], { icon: locationIcon })
+        .addTo(this.map)
+        .bindPopup(
+          `<b>${data.name}</b><br>Latitude: ${data.lat}<br>Longitude: ${data.lng}`
+        );
+
+      marker.on('click', () => {
+        console.log('Marker được click:', data);
+        this.handleMarkerClick(data);
       });
-    } else {
-      console.error('Leaflet library not loaded.'); // Thông báo nếu thư viện Leaflet chưa được tải
-    }
+
+      this.markers.push(marker); // Lưu lại marker mới
+    });
   }
   // hàm xử lý sự kiện click vào biểu tượng vị trí sẽ hiển thị nội dung thông tin vị trí vào dưới bảng đồ
   handleMarkerClick(data: MarkerData): void {
@@ -179,7 +201,11 @@ lineChartVisible: any = false;
     const x = d3
       .scaleTime()
       .domain(
-        (d3.extent(data, (d: DataPoint) => new Date(d.timestamp)) as [Date,Date]) || defaultExtent)
+        (d3.extent(data, (d: DataPoint) => new Date(d.timestamp)) as [
+          Date,
+          Date
+        ]) || defaultExtent
+      )
       .range([0, width]);
 
     DrawLine('humidity', 'steelblue', 'steelblue', this.selectedYear);
@@ -192,18 +218,19 @@ lineChartVisible: any = false;
       .axisBottom(x)
       .tickSize(0) // Bỏ dấu gạch
       .tickFormat(() => ''); // Bỏ nhãn
-      // .tickFormat((domainValue: Date | any, index: number) => {
-      //   // Giả định domainValue là Date hoặc number, sử dụng kiểm tra runtime để xác định kiểu
-      //   if (domainValue instanceof Date) {
-      //     return d3.timeFormat('%d-%m-%Y')(domainValue);
-      //   }
-      //   // Trả về chuỗi rỗng hoặc xử lý khác cho giá trị number
-        // return '';
-    
-    svg.append('g')
+    // .tickFormat((domainValue: Date | any, index: number) => {
+    //   // Giả định domainValue là Date hoặc number, sử dụng kiểm tra runtime để xác định kiểu
+    //   if (domainValue instanceof Date) {
+    //     return d3.timeFormat('%d-%m-%Y')(domainValue);
+    //   }
+    //   // Trả về chuỗi rỗng hoặc xử lý khác cho giá trị number
+    // return '';
+
+    svg
+      .append('g')
       .attr('transform', `translate(0, ${height})`) // Đặt vị trí của trục x ở dưới cùng của SVG
       .call(xAxis);
- 
+
     const yAxis = d3.axisLeft(y);
     svg
       .append('g')
@@ -238,34 +265,36 @@ lineChartVisible: any = false;
           )?.value;
           return y(sensorValue ?? 0);
         });
-// thêm nhãn
-const legendData = [
-  { color: 'red', label: 'Chỉ số tia UV' },
-  { color: 'blue', label: 'Chỉ số nhiệt độ - Temperate' },
-  { color: 'green', label: 'Chỉ số độ ẩm - Humidity' }
-];
-const legend = svg.append('g')
-  .attr('class', 'legend')
-  .attr('transform', `translate(${width - 200}, 20)`); // Điều chỉnh vị trí của chú giải
-  legendData.forEach((item, index) => {
-    // Thêm hình dạng cho chú giải (ở đây là hình chữ nhật)
-    legend.append('rect')
-      .attr('x', 0)
-      .attr('y', index * 20) // Điều chỉnh khoảng cách giữa các mục
-      .attr('width', 10)
-      .attr('height', 10)
-      .style('fill', item.color); // Sử dụng màu sắc từ dữ liệu chú giải
-    
-    // Thêm nhãn cho mỗi mục chú giải
-    legend.append('text')
-      .attr('x', 20) // Điều chỉnh vị trí nhãn so với hình dạng
-      .attr('y', index * 20 + 10) // Đảm bảo nhãn cân đối với hình dạng
-      .text(item.label) // Sử dụng nhãn từ dữ liệu chú giải
-      .style('font-size', '12px')
-      .attr('text-anchor', 'start')
-      .style('fill', item.color); // Có thể thay đổi màu chữ nếu muốn
-  });
+      // thêm nhãn
+      const legendData = [
+        { color: 'red', label: 'Chỉ số tia UV' },
+        { color: 'blue', label: 'Chỉ số nhiệt độ - Temperate' },
+        { color: 'green', label: 'Chỉ số độ ẩm - Humidity' },
+      ];
+      const legend = svg
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', `translate(${width - 200}, 20)`); // Điều chỉnh vị trí của chú giải
+      legendData.forEach((item, index) => {
+        // Thêm hình dạng cho chú giải (ở đây là hình chữ nhật)
+        legend
+          .append('rect')
+          .attr('x', 0)
+          .attr('y', index * 20) // Điều chỉnh khoảng cách giữa các mục
+          .attr('width', 10)
+          .attr('height', 10)
+          .style('fill', item.color); // Sử dụng màu sắc từ dữ liệu chú giải
 
+        // Thêm nhãn cho mỗi mục chú giải
+        legend
+          .append('text')
+          .attr('x', 20) // Điều chỉnh vị trí nhãn so với hình dạng
+          .attr('y', index * 20 + 10) // Đảm bảo nhãn cân đối với hình dạng
+          .text(item.label) // Sử dụng nhãn từ dữ liệu chú giải
+          .style('font-size', '12px')
+          .attr('text-anchor', 'start')
+          .style('fill', item.color); // Có thể thay đổi màu chữ nếu muốn
+      });
 
       svg
         .append('path')
