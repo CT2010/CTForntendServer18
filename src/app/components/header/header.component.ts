@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -37,12 +38,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.isLogin = false;
     this.loggedInUser = null;
-    // sessionStorage.clear;
-    // location.reload;
-    // location.origin;
-    // this.router.navigate(['/guest']);
-
-    // location.assign('http://localhost:4200/guest'); // xử lý được trường hợp không quay về các trang và xóa lệnh header
+    location.assign('/');
   }
 
   //Phần vieww bên trong

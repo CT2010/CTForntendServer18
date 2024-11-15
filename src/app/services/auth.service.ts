@@ -24,7 +24,9 @@ export class AuthService {
   private loggedInUser: string | null = null; // Thêm biến để lưu trữ thông tin người dùng
   // Thêm một Subject để thông báo về sự thay đổi trong thông tin người dùng đã đăng nhập
   userChange: Subject<string | null> = new Subject<string | null>();
-
+  
+  // định nghĩa đường dẫn trang chủ
+  private homeUrl = `${environment.apiUrl}`; // Cập nhật đường dẫn API
   // Đây là api dùng cho đăng ký, gửi nhận dữ liệu
   private visapiUrl = `${environment.apiUrl}/vis`; // Cập nhật đường dẫn API
   // private visapiUrl = 'http://localhost:3000/vis'; // Điều chỉnh đường dẫn API theo ứng dụng của bạn
@@ -221,7 +223,10 @@ export class AuthService {
         this.loginStatusChanged.emit(this.isLogin);
         this.token = '';
         localStorage.removeItem('token');
-        window.location.href = `${this.apiUrl}/guest`; // chuyển về trang guest
+        location.assign('/');
+
+        // location.assign(this.visapiUrl);
+        // window.location.href = `${environment.apiUrl}`; // chuyển về trang guest
       }),
       catchError((error) => {
         console.error('Logout error:', error);

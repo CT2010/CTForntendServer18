@@ -65,6 +65,7 @@ lineChartVisible: any = false;
   markerData: MarkerData[] = [
     { name: 'Huflit-01', lat: 10.779128980496425, lng: 106.66667808566008 },
     { name: 'Địa điểm 2', lat: 10.9231, lng: 106.9297 },
+    { name: 'NodeMCU', lat: 10.768875727633148, lng: 106.66684231611457 },
     // Thêm các địa điểm khác ở đây...
   ];
 
